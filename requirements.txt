@@ -1,0 +1,28 @@
+# tg-forwarder runtime
+telethon>=1.36.0,<2.0
+cryptg>=0.4.0            # C speedups for Telethon
+pysocks>=1.7.1           # SOCKS proxy support (optional)
+
+# Web stack
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+python-multipart>=0.0.9
+itsdangerous>=2.2.0     # session cookie signing
+websockets>=12.0
+
+# Database
+sqlalchemy[asyncio]>=2.0.30
+asyncpg>=0.29.0
+alembic>=1.13.0         # migrations
+
+# Config & utils
+pydantic>=2.7.0
+pydantic-settings>=2.3.0
+pyyaml>=6.0.1
+python-dotenv>=1.0.1
+
+# Logging
+loguru>=0.7.2
+
+# HTTP client (used for misc external fetches)
+httpx>=0.27.0

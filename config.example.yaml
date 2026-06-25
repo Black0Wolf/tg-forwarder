@@ -1,0 +1,44 @@
+# ===== tg-forwarder example configuration =====
+# Copy this file to config.yaml (or use install.sh wizard to generate one).
+# Every value here is also overridable via environment variables prefixed
+# with TGF_, e.g. TGF_BOT_TOKEN=... or TGF_DB_URL=...
+
+# --- Telegram credentials ---
+# Bot account (created via @BotFather). Used for the inline config menu
+# and for delivering OTP codes to admins.
+bot_token: "123456:ABC-DEF..."
+
+# Userbot account (your personal account). Required to:
+#   * read the FULL history of the source channel from the very first message
+#   * fetch your recent 15 channels/groups when picking source/destination
+# Get these at https://my.telegram.org → API development tools
+api_id: 1234567
+api_hash: "abcdef0123456789abcdef0123456789"
+phone: "+15555555555"           # international format
+session_name: "userbot"         # creates userbot.session next to config
+
+# --- PostgreSQL ---
+# Must be a PostgreSQL DSN. SQLite is not supported.
+db_url: "postgresql+asyncpg://tgforwarder:tgforwarder@localhost:5432/tgforwarder"
+
+# --- WebUI ---
+web:
+  host: "127.0.0.1"             # bind address (use 0.0.0.0 only behind a reverse proxy)
+  port: 8000
+  base_url: "http://127.0.0.1:8000"   # public URL the bot can mention in OTP messages
+  secret_key: "change-me-to-a-long-random-string"   # cookie signing key
+
+# --- Forwarder behaviour ---
+forwarder:
+  mode: "copy"                  # always "copy" in this build (no forward tag)
+  initial_backfill: true        # forward ALL past messages on first start
+  backfill_batch_size: 100      # messages per iteration
+  backfill_delay_ms: 250        # throttle between batches (Telegram flood wait safety)
+  live_poll_interval_s: 2       # how often to check for NEW messages after backfill
+  catch_up_on_start: true       # always resume from the persisted cursor
+
+# --- Admins (bootstrap) ---
+# Listed Telegram user IDs become Level-9 super-admins at first start.
+# Manage everyone else from the in-bot menu or the WebUI.
+super_admins:
+  - 123456789
